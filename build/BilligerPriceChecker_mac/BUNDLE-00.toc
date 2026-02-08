@@ -1,0 +1,4 @@
+([('BilligerPriceChecker',
+   '/Users/hydrogen/Documents/untitled '
+   'folder/billiger/dist/BilligerPriceChecker',
+   'EXECUTABLE')],)
