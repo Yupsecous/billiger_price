@@ -98,26 +98,33 @@ class BilligerPriceChecker:
 
         logger.info("Initializing Chrome WebDriver ...")
         
-        if getattr(sys, "frozen", False):
-            # Running from PyInstaller bundle - use detected version
-            if chrome_version:
-                self.driver = uc.Chrome(
-                    options=options,
-                    use_subprocess=True,
-                    version_main=chrome_version,
-                )
+        try:
+            if getattr(sys, "frozen", False):
+                # Running from PyInstaller bundle - use detected version
+                if chrome_version:
+                    self.driver = uc.Chrome(
+                        options=options,
+                        use_subprocess=True,
+                        version_main=chrome_version,
+                    )
+                else:
+                    self.driver = uc.Chrome(
+                        options=options,
+                        use_subprocess=True,
+                    )
             else:
+                # Running from source - let undetected-chromedriver auto-detect
                 self.driver = uc.Chrome(
                     options=options,
                     use_subprocess=True,
                 )
-        else:
-            # Running from source
+        except Exception as e:
+            logger.error(f"Failed to initialize Chrome: {e}")
+            logger.info("Retrying with default settings...")
+            # Fallback: try without version specification
             self.driver = uc.Chrome(
                 options=options,
                 use_subprocess=True,
-                version_main=144,
-                driver_executable_path=None,
             )
         
         self.driver.implicitly_wait(10)

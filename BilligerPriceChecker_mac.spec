@@ -1,11 +1,23 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
+from pathlib import Path
+
 a = Analysis(
     ['billiger_gui.py'],
     pathex=[],
     binaries=[],
     datas=[('billiger_price_checker.py', '.')],
-    hiddenimports=[],
+    hiddenimports=[
+        'selenium',
+        'selenium.webdriver',
+        'selenium.webdriver.chrome',
+        'selenium.webdriver.common',
+        'undetected_chromedriver',
+        'pandas',
+        'openpyxl',
+        'openpyxl.styles',
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -46,5 +58,6 @@ app = BUNDLE(
         'CFBundleShortVersionString': '1.0.0',
         'NSHighResolutionCapable': True,
         'LSMinimumSystemVersion': '10.15',
+        'NSRequiresAquaSystemAppearance': False,
     },
 )
